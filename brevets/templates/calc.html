@@ -121,20 +121,22 @@
             // View flask_brevets.py for details.
             function calc_times(control) {
               var km = control.find("input[name='km']").val();
-	      var miles = control.find("input[name='miles']").val();
-				     //NOW LOOKING AT DOCUMENT TO FIND THESE THINGS NOT CONTROL.(COPY IT FROM PROJ3 BABYYYY)
-	      var brevet_dist = control.find("input[id='brevet_distance_km']").val();
-	      var start_time = control.find("input[name='open']").val();
+              var open_time_field = control.find("input[name='open']");
+              var close_time_field = control.find("input[name='close']");
+	      
+	      //$("#begin_date").keyup(function(event){
+	      var start_time = $("#begin_date").val()
+	      	    
 
-		    $.getJSON(TIME_CALC_URL, {km: km}, {brevet_dist: brevet_dist}, {start_time: start_time}).done(
+	      //$("#brevet_dist_km").keyup(function(event){
+	      var brevet_dist = $("#brevet_dist_km").val()
+		    $.getJSON(TIME_CALC_URL, {km: km}, {brevet_distance: brevet_dist}, {brevet_start_time: start_time}).done(
                 function(data) {
                    var times = data.result;
                    console.log("Got a response: ");
                    console.log("Response.open = " + times.open);
                    // This part will automatically fill the open and close slots,
                    // so don't worry about those.
-                   var open_time_field = data.result.open//control.find("input[name='open']");
-                   var close_time_field = data.result.close//control.find("input[name='close']");
                    open_time_field.val(moment(times.open).format("YYYY-MM-DDTHH:mm"));
                    close_time_field.val(moment(times.close).format("YYYY-MM-DDTHH:mm"));
                  }
@@ -143,7 +145,10 @@
                  console.log("Error!");
                  console.log(err);
                });
+	     // });
+	      //});
             }
+	   
 
             $(document).ready(function(){
              // Do the following when the page is finished loading
